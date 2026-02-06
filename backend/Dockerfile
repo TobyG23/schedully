@@ -10,8 +10,8 @@ RUN npm ci
 
 COPY . .
 
-# Generar Prisma Client con permisos correctos
-RUN ./node_modules/.bin/prisma generate
+# Generar Prisma Client usando node directamente
+RUN node node_modules/prisma/build/index.js generate
 
 # Production stage
 FROM node:20-alpine
