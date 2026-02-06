@@ -10,7 +10,8 @@ RUN npm ci
 
 COPY . .
 
-RUN npx prisma generate
+# Generar Prisma Client con permisos correctos
+RUN ./node_modules/.bin/prisma generate
 
 # Production stage
 FROM node:20-alpine
@@ -18,10 +19,11 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/src ./src
 
-EXPOSE 3001
+EXPOSE 3000
 
 CMD ["npm", "start"]
