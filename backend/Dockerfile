@@ -10,7 +10,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run db:generate
+RUN npx prisma generate
 
 # Production stage
 FROM node:20-alpine
