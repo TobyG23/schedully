@@ -1,0 +1,12 @@
+# Habilitar el motor de reescritura
+RewriteEngine On
+
+# Redirigir todas las peticiones /api al backend Node.js
+RewriteRule ^api/(.*)$ http://localhost:3001/api/$1 [P,L]
+
+# Si el archivo o directorio existe, servirlo directamente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirigir todo lo demás a index.html (para React Router)
+RewriteRule ^ index.html [L]
