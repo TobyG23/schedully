@@ -14,6 +14,7 @@ git -C "$REPO_DIR" pull origin main
 echo "==> Building frontend..."
 cd "$FRONTEND_DIR"
 npm install --silent
+chmod +x node_modules/.bin/* 2>/dev/null || true
 npm run build
 
 echo "==> Installing backend dependencies..."
@@ -22,6 +23,6 @@ npm install --silent
 npx prisma generate
 
 echo "==> Restarting backend (PM2)..."
-pm2 restart schedully-api 2>/dev/null || pm2 start server.js --name schedully-api
+pm2 restart schedully-api 2>/dev/null || pm2 start src/index.js --name schedully-api
 
 echo "==> Done! Deploy completed successfully."
