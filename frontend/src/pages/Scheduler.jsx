@@ -9,6 +9,8 @@ import {
   DocumentDuplicateIcon,
   PaperAirplaneIcon,
   ClockIcon,
+  CalendarDaysIcon,
+  CheckIcon,
 } from '@heroicons/react/24/outline';
 import { format, startOfWeek, endOfWeek, addWeeks, subWeeks, eachDayOfInterval, isSameDay, differenceInMinutes } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -250,7 +252,7 @@ export default function Scheduler() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Horarios</h1>
+          <h1 className="text-2xl font-bold text-navy-800">Horarios</h1>
           <p className="text-gray-600">Gestiona los turnos de trabajo</p>
         </div>
 
@@ -303,7 +305,7 @@ export default function Scheduler() {
             </button>
           </div>
 
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold text-navy-800">
             {format(weekStart, "d 'de' MMMM", { locale: es })} -{' '}
             {format(weekEnd, "d 'de' MMMM, yyyy", { locale: es })}
           </h2>
@@ -323,7 +325,7 @@ export default function Scheduler() {
             <table className="w-full">
               <thead>
                 <tr className="bg-gray-50 border-b">
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 w-64">
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-navy-800 w-64">
                     Empleado
                   </th>
                   {weekDays.map((day) => (
@@ -332,7 +334,7 @@ export default function Scheduler() {
                       className={`px-2 py-3 text-center text-sm font-semibold min-w-[120px] ${
                         isSameDay(day, new Date())
                           ? 'bg-primary-50 text-primary-700'
-                          : 'text-gray-900'
+                          : 'text-navy-800'
                       }`}
                     >
                       <div>{format(day, 'EEE', { locale: es })}</div>
@@ -391,7 +393,7 @@ export default function Scheduler() {
                           {user.firstName[0]}{user.lastName[0]}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-gray-900 text-sm">
+                          <div className="font-medium text-navy-800 text-sm">
                             {user.firstName} {user.lastName}
                           </div>
                           <div className="text-xs text-gray-500">
@@ -404,7 +406,7 @@ export default function Scheduler() {
                             <span>{formatHours(plannedMinutes)}</span>
                           </div>
                           <div className={`flex items-center gap-1 ${workedMinutes > 0 ? 'text-green-600' : 'text-gray-400'}`} title="Horas trabajadas">
-                            <span className="text-[10px]">✓</span>
+                            <CheckIcon className="h-3 w-3" />
                             <span>{workedMinutes > 0 ? formatHours(workedMinutes) : '--'}</span>
                           </div>
                         </div>
@@ -438,10 +440,11 @@ export default function Scheduler() {
                               >
                                 {shift.isDayOff ? (
                                   <>
-                                    <div className="font-medium text-gray-700">
-                                      🗓️ Día Libre
+                                    <div className="flex items-center gap-1 font-medium text-gray-600">
+                                      <CalendarDaysIcon className="h-3.5 w-3.5 flex-shrink-0" />
+                                      Día Libre
                                     </div>
-                                    <div className="text-gray-500">
+                                    <div className="text-gray-500 text-[11px]">
                                       {shift.dayOffType === 'VACATION' ? 'Vacaciones' :
                                        shift.dayOffType === 'SICK' ? 'Enfermedad' :
                                        shift.dayOffType === 'PERSONAL' ? 'Personal' :
@@ -451,7 +454,7 @@ export default function Scheduler() {
                                   </>
                                 ) : (
                                   <>
-                                    <div className="font-medium text-gray-900">
+                                    <div className="font-medium text-navy-800">
                                       {formatTime(shift.startTime)} - {formatTime(shift.endTime)}
                                     </div>
                                     <div className="text-gray-600">
